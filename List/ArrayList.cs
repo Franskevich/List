@@ -6,9 +6,9 @@ namespace List
 {
     public class ArrayList
     {
-
-        public int L { get; private set; } // длина свойство
+        public int L { get; private set; }     // полезная длина свойство
         private int[] _array;                  //фактический массив,  не видимый пользователю
+
 // индексатор
         public int this[int index]
         {
@@ -29,28 +29,8 @@ namespace List
                 _array[index] = value;
             }
         }
-        //ArrayList a = new ArrayList(10);
-        //a[1] = 234;
-        //    int g = a[13];
-        //a.SetValueAtIndex(3, 13);
-        public ArrayList() // pustoi construktor
-        {
-            L = 0;// dlina dlia polzovately
-            _array = new int[10];
-        }
 
-//1 добавление значения в конец
-        public void Add(int value)
-        {
-            if (L == _array.Length)
-            {
-                UpSize();// *1.33+1
-            }
-            _array[L] = value;
-            L++; //и длина и последний индекс вносимого значения
-        }
-
-        //увеличение длины массива
+//увеличение длины массива
         public void UpSize()
         {
             int newlength = (int)(_array.Length * 1.33d + 1);
@@ -61,8 +41,8 @@ namespace List
             }
             _array = tmpArray;
         }
-
-        // уменьшение длины массива
+     
+// уменьшение длины массива
         public void DownSize()
         {
             int newlength = (int)(_array.Length * 0.67d + 1);
@@ -74,6 +54,17 @@ namespace List
             _array = tmpArray;
         }
 
+//1 добавление значения в конец
+        public void AddLast(int value)
+        {
+            if (L == _array.Length)
+            {
+                UpSize();                   // *1.33+1
+            }
+            _array[L] = value;
+            L++;                            //и длина и последний индекс вносимого значения
+        }
+     
 //2 добавить значение в начало
         public void AddFirst(int value)
         {
@@ -81,9 +72,9 @@ namespace List
             {
                 UpSize();
             }
-            int[] tmpArray = new int[_array.Length];//пересоздаем массив
+            int[] tmpArray = new int[_array.Length];          //пересоздаем массив
             tmpArray[0] = value;
-            for (int i = 0; i < _array.Length; i++)
+            for (int i = 0; i < _array.Length-1; i++)
             {
                 tmpArray[i + 1] = _array[i];
             }
@@ -92,21 +83,36 @@ namespace List
         }
 
 //3 добавление значения по индексу
-        public void AddByIndex(int value, int index) //narushen single responsobility сделать метод мув с
+        public void AddValueByIndex(int value, int index) //narushen single responsobility сделать метод мув с
+        {
+            MoveByIndex(index);
+            _array[index] = value;
+        }
+//
+        public void MoveByIndex(int index)
         {
             if (L == _array.Length)
             {
                 UpSize();
             }
-            int[] tmpArray = new int[_array.Length];
-            for (int i = _array.Length; i > index; i--)
+            int[] tmpArray = new int[_array.Length + 1];
+            
+            for (int i = 0; i < _array.Length; i++)
             {
-                tmpArray[i + 1] = _array[i];
+                if (i < index)
+                {
+                    tmpArray[i] = _array[i];
+                }
+                else
+                {
+                    tmpArray[i + 1] = _array[i];
+                }
             }
-            tmpArray[index] = value;
+            tmpArray[index] = 0;
             _array = tmpArray;
             L++;
         }
+
 
 //4 удаление из конца 1 элемента
         public void RemoveLast()
@@ -116,7 +122,7 @@ namespace List
         }
 
 //5 удаление из начала одного элемента
-        public void RemoveFirst()// перенести в массиве 123 всё на 1 шаг вперед будет быстрее. Так же сделать в ремоут(делит) индекс
+        public void RemoveFirst()               // перенести в массиве 123 всё на 1 шаг вперед будет быстрее. Так же сделать в ремоут(делит) индекс
         {
             int n = 1;
             RemoveFirstN(n);
@@ -131,11 +137,7 @@ namespace List
         {// отбить ошибки -900
             
             int n = 1;
-
             RemoveByIndexNElements(index, n);
-
-            // L -= 1;
-
             if (L < (_array.Length / 2))
             {
                 DownSize();
@@ -159,18 +161,19 @@ namespace List
         public void RemoveFirstN(int n)
         {
             int[] tmpArray = new int[_array.Length];
-            for (int i = n; i > _array.Length; i++) //!!!всю длину двигать не надо, достаточно полезной длины потому что дальше все равно нули нам на них плевать
+            for (int i = n; i > _array.Length; i++)        //!!!всю длину двигать не надо, достаточно полезной длины потому что дальше все равно нули нам на них плевать
             {
                 tmpArray[i - n] = _array[i];
             }
             _array = tmpArray;
 
-            L--;
+            L-=n;
             if (L <= (_array.Length / 2))
             {
                 DownSize(); //zavisit ot novoi Length! umenshaem dlinu do nego
             }
         }
+
 //9 удаление по индексу N элементов
         public void RemoveByIndexNElements(int index, int n)
         {
@@ -360,6 +363,11 @@ namespace List
 
 
         //23.1 Конструктор по умолчанию
+        public ArrayList() // pustoi construktor
+        {
+            L = 0;// dlina dlia polzovately
+            _array = new int[10];
+        }
 
         //23.2 Конструктор на основе 1 элемента
 
@@ -377,7 +385,7 @@ namespace List
         //25 добавление списка в начало
 
         //26 добавление списка по индексу
-        AddArrayListAtIndex
+       //AddArrayListAtIndex
 
 
 
