@@ -6,7 +6,7 @@ namespace List
 {
     public class ArrayList
     {
-        public int L { get; private set; }     // полезная длина свойство
+        public int Length { get; private set; }     // полезная длина свойство
         private int[] _array;                  //фактический массив,  не видимый пользователю
 
 // индексатор
@@ -14,7 +14,7 @@ namespace List
         {
             get
             {
-                if (index < 0 || index > L - 1)
+                if (index < 0 || index > Length - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -22,7 +22,7 @@ namespace List
             }
             set
             {
-                if (index < 0 || index > L - 1)
+                if (index < 0 || index > Length - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -31,7 +31,7 @@ namespace List
         }
 
 //увеличение длины массива
-        public void UpSize()
+        private void UpSize()
         {
             int newlength = (int)(_array.Length * 1.33d + 1);
             int[] tmpArray = new int[newlength];
@@ -43,7 +43,7 @@ namespace List
         }
      
 // уменьшение длины массива
-        public void DownSize()
+        private void DownSize()
         {
             int newlength = (int)(_array.Length * 0.67d + 1);
             int[] tmpArray = new int[newlength];
@@ -57,18 +57,18 @@ namespace List
 //1 добавление значения в конец
         public void AddLast(int value)
         {
-            if (L == _array.Length)
+            if (Length == _array.Length)
             {
                 UpSize();                   // *1.33+1
             }
-            _array[L] = value;
-            L++;                            //и длина и последний индекс вносимого значения
+            _array[Length] = value;
+            Length++;                            //и длина и последний индекс вносимого значения
         }
      
 //2 добавить значение в начало
         public void AddFirst(int value)
         {
-            if (L == _array.Length)
+            if (Length == _array.Length)
             {
                 UpSize();
             }
@@ -79,7 +79,7 @@ namespace List
                 tmpArray[i + 1] = _array[i];
             }
             _array = tmpArray;
-            L++;
+            Length++;
         }
 
 //3 добавление значения по индексу
@@ -89,9 +89,9 @@ namespace List
             _array[index] = value;
         }
 //
-        public void MoveByIndex(int index)
+        private void MoveByIndex(int index)
         {
-            if (L == _array.Length)
+            if (Length == _array.Length)
             {
                 UpSize();
             }
@@ -110,7 +110,7 @@ namespace List
             }
             tmpArray[index] = 0;
             _array = tmpArray;
-            L++;
+            Length++;
         }
 
 
@@ -126,8 +126,8 @@ namespace List
         {
             int n = 1;
             RemoveFirstN(n);
-            L -= n;
-            if (L <= (_array.Length / 2))
+
+            if (Length <= (_array.Length / 2))
             {
                 DownSize(); //zavisit ot novoi Length! umenshaem dlinu do nego
             }
@@ -138,7 +138,7 @@ namespace List
             
             int n = 1;
             RemoveByIndexNElements(index, n);
-            if (L < (_array.Length / 2))
+            if (Length < (_array.Length / 2))
             {
                 DownSize();
             }
@@ -150,8 +150,8 @@ namespace List
             {
                 throw new ArgumentOutOfRangeException("Значение не может быть отрицательным, либо равным нулю");
             }
-            L -= n;
-            if (L <= (_array.Length / 2))
+            Length -= n;
+            if (Length <= (_array.Length / 2))
             {
                 DownSize();
             }
@@ -161,14 +161,14 @@ namespace List
         public void RemoveFirstN(int n)
         {
             int[] tmpArray = new int[_array.Length];
-            for (int i = n; i > _array.Length; i++)        //!!!всю длину двигать не надо, достаточно полезной длины потому что дальше все равно нули нам на них плевать
+            for (int i = n; i < _array.Length; i++)        //!!!всю длину двигать не надо, достаточно полезной длины потому что дальше все равно нули нам на них плевать
             {
                 tmpArray[i - n] = _array[i];
             }
             _array = tmpArray;
 
-            L-=n;
-            if (L <= (_array.Length / 2))
+            Length-=n;
+            if (Length <= (_array.Length / 2))
             {
                 DownSize(); //zavisit ot novoi Length! umenshaem dlinu do nego
             }
@@ -189,13 +189,13 @@ namespace List
             //}
             //_array = tmpArray;
 
-            for (int i = index; i < L-n; i++)
+            for (int i = index; i < Length-n; i++)
             {
                 _array[i] = _array[i + n];
             }
 
-            L -= n;
-            if (L < (_array.Length / 2))
+            Length -= n;
+            if (Length < (_array.Length / 2))
             {
                 DownSize();
             }
@@ -203,7 +203,7 @@ namespace List
 //10 вернуть длину
         public int GetLength()
         {
-            return L;
+            return Length;
         }
 
 //11 доступ по индексу
@@ -215,7 +215,7 @@ namespace List
         public int GetFirstIndexByValue(int x)
         {
             int index = 0;
-            for (int i = 0; i < L-1; i++)   // return _array[index]; ...
+            for (int i = 0; i < Length-1; i++)   // return _array[index]; ...
             {
                 if (_array[i] == x)
                 {
@@ -234,10 +234,10 @@ namespace List
         public void Reverse()
         {
             int tmpArrayX;
-            for (int i = 0; i< (L/2); i++)// обращайте внимание что мы все реверсы делаем с точки зрения клиента, а не по реальной длине
+            for (int i = 0; i< (Length/2); i++)// обращайте внимание что мы все реверсы делаем с точки зрения клиента, а не по реальной длине
             {
                 tmpArrayX = _array[i];
-                int x = L - i - 1;
+                int x = Length - i - 1;
                 _array[i] = _array[x];
                 _array[x] = tmpArrayX;
             }
@@ -246,7 +246,7 @@ namespace List
         public int GetMax()
         {
             int max = _array[0];
-            for (int i = 1; i<L; i++)
+            for (int i = 1; i<Length; i++)
             {
                 if (_array[i]>max)
                 {
@@ -260,7 +260,7 @@ namespace List
         public int GetValueOfMinElement(int n)
         {
             int min=_array[0];
-            for(int i=0; i<L; i++)
+            for(int i=0; i<Length; i++)
             {
                 if(_array[i]<min)
                 {
@@ -274,7 +274,7 @@ namespace List
         public int GetIndexOfMaxValue(int n)
         {
             int max = 0;
-            for (int i = 0; i < L; i++)
+            for (int i = 0; i < Length; i++)
             {
                 if (_array[i] > _array[max])
                 {
@@ -288,7 +288,7 @@ namespace List
         public int GetIndexOfMinValue()
         {
             int min = 0;
-            for (int i = 0; i < L; i++)
+            for (int i = 0; i < Length; i++)
             {
                 if (_array[i] <  _array[min])
                 {
@@ -302,9 +302,9 @@ namespace List
         public void SortByIncrease()
         {
             int tmp;
-            for (int i=0; i < L; i ++)
+            for (int i=0; i < Length; i ++)
             {
-                for (int j = i + 1; j < L; j++)
+                for (int j = i + 1; j < Length; j++)
                 {
                     if (_array[i] > _array[j])
                     {
@@ -320,9 +320,9 @@ namespace List
         public void SortByDecrease()
         {
             int tmp;
-            for (int i=0; i<L; i ++)
+            for (int i=0; i<Length; i ++)
             {
-                for (int j = i + 1; j<L; j++)
+                for (int j = i + 1; j<Length; j++)
                 {
                     if (_array[i] < _array[j])
                     {
@@ -338,7 +338,7 @@ namespace List
         //public int RemoveFirstByValue (int x)
         public void RemoveByValueFirst(int value)// не создвать лишний массив а присваивать в этом массиве сдедующие значения
         {
-            for (int i = 0; i < L; i++)
+            for (int i = 0; i < Length; i++)
             {
                 if (_array[i] == value)
                 {
@@ -346,13 +346,12 @@ namespace List
                     return;
                 }
             }
-        }
-            
+        }          
 
 //22 Удаление по значению всех(?вернуть кол-во)
         public void RemoveByValueAll(int value)
         {
-            for (int i = 0; i < L; i++)
+            for (int i = 0; i < Length; i++)
             {
                 if (_array[i] == value)
                 {
@@ -361,38 +360,76 @@ namespace List
             }
         }
 
-
         //23.1 Конструктор по умолчанию
         public ArrayList() // pustoi construktor
         {
-            L = 0;// dlina dlia polzovately
+            Length = 0;// dlina dlia polzovately
             _array = new int[10];
         }
 
         //23.2 Конструктор на основе 1 элемента
+        public ArrayList(int value)
+        {
+            Length = 1;
+            _array = new int[1] {value};
+        }
 
         //23.3 конструктор на основе массива
         public ArrayList(int[]array)
         {                        
-            L = array.Length;
+            Length = array.Length;
             _array = array;
             UpSize();
         }
 
-
-        //24 дообавлеение нашего списка в конец
+        //24 добавление нашего списка в конец
+        public void AddArrayListAtTheEnd (int[]array)
+        {          
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (Length == _array.Length)
+                {
+                    UpSize();
+                }
+                    _array[Length] = array[i];
+                Length++;
+            }
+        }
 
         //25 добавление списка в начало
+        public void AddArrayListAtTheBegining(int[]array)
+        {
+            for (int i = 0; i< array.Length; i++)
+            {
+                if (Length == _array.Length)
+                {
+                    UpSize();
+                }
+                _array[0] = array[i];
+                Length++;
+            }
+        }
 
         //26 добавление списка по индексу
-       //AddArrayListAtIndex
-
+        
+        public void AddArrayListByIndex(int index, int[]array)
+        {
+            for (int i = 0; i<array.Length; i++)
+            {
+                if (Length == _array.Length)
+                {
+                    UpSize();
+                }
+                MoveByIndex(i+index);
+                _array[i+index] = array[i];
+            }
+        }
 
 
         public override string ToString()
         {
             string s = "";
-            for(int i = 0; i < L; i++)
+            for(int i = 0; i < Length; i++)
             {
                 s += _array[i] + " ";
             }
@@ -401,11 +438,11 @@ namespace List
         public override bool Equals(object obj)//kак он будет сравнивать элементы что бы асерт работал
         {
             ArrayList arrayList = (ArrayList)obj;
-            if (this.L != arrayList.L)
+            if (this.Length != arrayList.Length)
             {
                 return false;
             }
-            for(int i=0; i<L; i++)
+            for(int i=0; i<Length; i++)
             {
                 if (this._array[i] != arrayList._array[i])
                 {
