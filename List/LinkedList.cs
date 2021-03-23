@@ -117,7 +117,7 @@ namespace List
             }
             else
             {
-                return ""String.Empty;
+                return " "+String.Empty;
             }
         }
         public override bool Equals(object obj)

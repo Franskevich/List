@@ -31,9 +31,9 @@ namespace List
         }
 
 //увеличение длины массива
-        private void UpSize()
+        private void UpSize(int n=1)
         {
-            int newlength = (int)(_array.Length * 1.33d + 1);
+            int newlength = (int)((_array.Length + n) * 1.33d);
             int[] tmpArray = new int[newlength];
             for (int i = 0; i < _array.Length; i++)
             {
@@ -299,7 +299,7 @@ namespace List
         }
 
 //19 Сортировка по возрастанию
-        public void SortByIncrease()
+        public void SortByAcsending()
         {
             int tmp;
             for (int i=0; i < Length; i ++)
@@ -317,7 +317,7 @@ namespace List
         }
 
 //20 Сортировка по убыванию
-        public void SortByDecrease()
+        public void SortByDescending()
         {
             int tmp;
             for (int i=0; i<Length; i ++)
@@ -383,45 +383,49 @@ namespace List
         }
 
         //24 добавление нашего списка в конец
-        public void AddArrayListAtTheEnd (int[]array)
+        public void AddArrayListAtTheEnd (ArrayList ListOne)
         {          
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < ListOne.Length; i++)
             {
                 if (Length == _array.Length)
                 {
                     UpSize();
                 }
-                    _array[Length] = array[i];
+                _array[Length] = ListOne[i];
                 Length++;
             }
         }
 
         //25 добавление списка в начало
-        public void AddArrayListAtTheBegining(int[]array)
+        public void AddArrayListAtTheBegining(ArrayList ListOne)
         {
-            for (int i = 0; i< array.Length; i++)
+            for (int i = 0; i <= ListOne.Length; i++)
             {
-                if (Length == _array.Length)
+                if (Length + ListOne.Length >= _array.Length)
                 {
-                    UpSize();
+                    UpSize(ListOne.Length);
                 }
-                _array[0] = array[i];
-                Length++;
+                 _array[Length + ListOne.Length-i -1]= _array[Length-i-1];
             }
+            for (int i = 0; i < ListOne.Length; i++)
+            {
+                _array[i] = ListOne[i];
+                Length++;
+            }            
         }
 
         //26 добавление списка по индексу
         
-        public void AddArrayListByIndex(int index, int[]array)
+        public void AddArrayListByIndex(int index, ArrayList ListOne)
         {
-            for (int i = 0; i<array.Length; i++)
+            for (int i = 0; i<ListOne.Length; i++)
             {
                 if (Length == _array.Length)
                 {
                     UpSize();
                 }
                 MoveByIndex(i+index);
-                _array[i+index] = array[i];
+                _array[i+index] = ListOne[i];
             }
         }
 
