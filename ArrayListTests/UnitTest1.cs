@@ -154,15 +154,15 @@ namespace ArrayListTests
             Assert.AreEqual(expected, actual);
         }
 
-        //26
-        [TestCase(2, new int[] {2,3}, new int[] { 2, 3, 5, 4, 6 }, new int[] { 2, 3, 2, 3, 5, 4, 6 })]
-        public void AddArrayListByIndexTests(int index, int[] array, int[] actualArray, int[] expectedArray)
-        {
-            ArrayList actual = new ArrayList(actualArray);
-            ArrayList expected = new ArrayList(expectedArray);           
-            actual.AddArrayListByIndex(index, array);
-            Assert.AreEqual(expected, actual);
-        }
+        ////26
+        ////[TestCase(2, new int[] {2,3}, new int[] { 2, 3, 5, 4, 6 }, new int[] { 2, 3, 2, 3, 5, 4, 6 })]
+        ////public void AddArrayListByIndexTests(int index, int[] array, int[] actualArray, int[] expectedArray)
+        ////{
+        ////    ArrayList actual = new ArrayList(actualArray);
+        ////    ArrayList expected = new ArrayList(expectedArray);           
+        ////    actual.AddArrayListByIndex(index, array);
+        ////    Assert.AreEqual(expected, actual);
+        ////}
 
         //[TestCase(3, 5, new int[] { 2, 6, 77, 3, 3, 2 }, new int[] { 2, 6, 77, 3, 6, 3, 3, -5, 3, 3, 2 })]
         //public void RemoveByIndexNElementsTests(int index, int n, int[] expectedArray, int[] actualArray)
@@ -190,5 +190,12 @@ namespace ArrayListTests
         //    expected.Add(2);
 
         //    expected.RemoveByIndexNElements(3, 5);
+
+        //public void Test1()
+        //{
+        //    LinkedList a = new LinkedList(new int[] { 1, 2, 3, 4 });
+        //    LinkedList b = new LinkedList(new int[] { 1, 2, 3, 4 });
+        //        Assert.AreEqual(a, b);
+        //}
     }
 }
