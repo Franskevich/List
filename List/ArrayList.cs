@@ -10,7 +10,7 @@ namespace List
         private int[] _array;                  //фактический массив,  не видимый пользователю
 
 // индексатор
-        public int this[int index]
+        private int this[int index]
         {
             get
             {
@@ -134,8 +134,7 @@ namespace List
         }
 //6 удаление по индексу одного элемента
         public void RemoveByIndex(int index)// не создвать лишний массив а присваивать в этом массиве сдедующие значения
-        {// отбить ошибки -900
-            
+        {                           
             int n = 1;
             RemoveByIndexNElements(index, n);
             if (Length < (_array.Length / 2))
@@ -176,19 +175,11 @@ namespace List
 
 //9 удаление по индексу N элементов
         public void RemoveByIndexNElements(int index, int n)
-        {
-            //int[] tmpArray = new int[_array.Length];
-            //for (int i = index; i < L-n; i++)
-            //{               
-            //    tmpArray[i] = _array[i+n];
-            //}
-
-            //for (int i=0; i<index; i++)
-            //{
-            //    tmpArray[i] = _array[i];
-            //}
-            //_array = tmpArray;
-
+        {          
+            if ( index < 0 && n < 0 )
+            {
+                throw new ArgumentException("числа не могут быть отрицательными");
+            }
             for (int i = index; i < Length-n; i++)
             {
                 _array[i] = _array[i + n];
@@ -207,8 +198,12 @@ namespace List
         }
 
 //11 доступ по индексу
-        public int GetElementByIndex(int index)
+        public int GetElementByIndex(int index)      
         {
+            if (index < 0)
+            {
+                throw new ArgumentException("числа не могут быть отрицательными");
+            }
             return _array[index]; // правило избыточности
         }
 //12 первый индекс по значению
@@ -228,6 +223,10 @@ namespace List
 //13 изменение по индексу
         public void ChangeValueByIndex(int index, int value)
         {
+            if (index < 0)
+            {
+                throw new ArgumentException("Индекс не может быть отрицательным");
+            }
             _array[index] = value;
         }
 //14 реверс
@@ -257,7 +256,7 @@ namespace List
         }
 
 //16    поиск значения минимального элемента   
-        public int GetValueOfMinElement(int n)
+        public int GetValueOfMinElement()
         {
             int min=_array[0];
             for(int i=0; i<Length; i++)
@@ -271,7 +270,7 @@ namespace List
         }
 
 //17 поиск индекс максмального элемента
-        public int GetIndexOfMaxValue(int n)
+        public int GetIndexOfMaxValue()
         {
             int max = 0;
             for (int i = 0; i < Length; i++)

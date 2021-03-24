@@ -1,6 +1,6 @@
 using List;
 using NUnit.Framework;
-
+using System;
 
 namespace ArrayListTests
 {
@@ -39,12 +39,12 @@ namespace ArrayListTests
             Assert.AreEqual(expected, actual);
         }
 
-        //
-        //[TestCase(2, new int[] { 1, 2, 0, 3, 4, 5 }, new int[] { 1, 2, 3, 4, 5 })]
-        //public void MoveByIndexTests(int index, int[] expectedArray, int[] actualArray)
+        //приватный
+        //[TestCase(2, new int[] { 1, 2, 3, 4, 5 }, new int[] { 1, 2, 0, 3, 4, 5 })]
+        //public void MoveByIndexTests(int index, int[] actualArray, int[] expectedArray)
         //{
-        //    ArrayList expected = new ArrayList(expectedArray);
         //    ArrayList actual = new ArrayList(actualArray);
+        //    ArrayList expected = new ArrayList(expectedArray);
         //    actual.MoveByIndex(index);
         //    Assert.AreEqual(expected, actual);
         //}
@@ -130,18 +130,17 @@ namespace ArrayListTests
         }
 
         //12
-        //[TestCase(1,3, new int[] { 2, 7, 5, 6, 7 }, new int[] { 2, 3, 5, 6, 7 })]
-        //public void GetFirstIndexByValueTests(int index, int value, int[] actualArray, int[] expectedArray)
-        //{
-        //    ArrayList actual = new ArrayList(actualArray);
-        //    ArrayList expected = new ArrayList(expectedArray);
-        //    actual GetFirstIndexByValue(index, value);
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestCase(7, new int[] { 2, 7, 5, 6, 7 }, 1)]
+        public void GetFirstIndexByValueTests(int value, int[] actualArray, int expected)
+        {
+            ArrayList array = new ArrayList(actualArray);
+            int actual = array.GetFirstIndexByValue(value);
+            Assert.AreEqual(expected, actual);
+        }
 
         //13
         [TestCase(1, 3, new int[] { 6, 7, 5 }, new int[] { 6, 3, 5 })]
-        public void ChangeValueByIndexTest(int index, int value, int[]actualArray, int[]expectedArray)
+        public void ChangeValueByIndexTest(int index, int value, int[] actualArray, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
             ArrayList expected = new ArrayList(expectedArray);
@@ -150,15 +149,89 @@ namespace ArrayListTests
         }
 
         //14
+        [TestCase(new int[] { 6, 7, 5 }, new int[] { 5, 7, 6 })]
+        public void ReverseTests(int[] actualArray, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.Reverse();
+            Assert.AreEqual(expected, actual);
+        }
         //15
+        [TestCase(new int[] { 6, 7, 5 }, 7)]
+        public void GetMax(int[] actualArray, int expected)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            int actualMax = actual.GetMax();
+            Assert.AreEqual(expected, actualMax);
+        }
+
         //16
+        [TestCase(new int[] { 6, 7, 5 }, 5)]
+        public void GetValueOfMinElementTests(int[] actualArray, int expected)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            int actualMin = actual.GetValueOfMinElement();
+            Assert.AreEqual(expected, actualMin);
+        }
+
         //17
+        [TestCase(new int[] { 6, 7, 5 }, 1)]
+        public void GetIndexOfMaxValueTests(int[] actualArray, int expected)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            int actualMaxValue = actual.GetIndexOfMaxValue();
+            Assert.AreEqual(expected, actualMaxValue);
+        }
         //18
+        [TestCase(new int[] { 6, 7, 5 }, 2)]
+        public void GetIndexOfMinValueTests(int[] actualArray, int expected)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            int actualIndexOfMin = actual.GetIndexOfMinValue();
+            Assert.AreEqual(expected, actualIndexOfMin);
+        }
         //19
+        [TestCase(new int[] { 6, 7, 5, 7, 9 }, new int[] { 5, 6, 7, 7, 9 })]
+        public void SortByAcsendingTests(int[] actualArray, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.SortByAcsending();
+            Assert.AreEqual(expected, actual);
+        }
+
         //20
+        [TestCase(new int[] { 6, 7, 5, 7, 9 }, new int[] { 9, 7, 7, 6, 5 })]
+        public void SortByDescendingTests(int[] actualArray, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.SortByDescending();
+            Assert.AreEqual(expected, actual);
+        }
         //21
+        [TestCase(7, new int[] { 6, 7, 5, 7, 9 }, new int[] { 6, 5, 7, 9 })]
+        public void RemoveByValueFirstTests(int value, int[] actualArray, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.RemoveByValueFirst(value);
+            Assert.AreEqual(expected, actual);
+        }
         //22
-        //23
+        [TestCase(7, new int[] { 6, 7, 5, 7, 9 }, new int[] { 6, 5, 9 })]
+        public void RemoveByValueAllTests(int value, int[] actualArray, int[] expectedArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
+            actual.RemoveByValueAll(value);
+            Assert.AreEqual(expected, actual);
+        }
+
+        //23констукторы
+
+
 
         //24
 
@@ -175,11 +248,11 @@ namespace ArrayListTests
 
 
         //25
-        [TestCase( new int[] { 2, 3, 5 }, new int[] { 1, 4 }, new int[] { 1, 4, 2, 3, 5 })]
+        [TestCase(new int[] { 2, 3, 5 }, new int[] { 1, 4 }, new int[] { 1, 4, 2, 3, 5 })]
         public void AddArrayListAtTheBeginingTests(int[] actualArray, int[] array, int[] expectedArray)
         {
-            ArrayList actual = new ArrayList(actualArray); 
-            ArrayList expected = new ArrayList(expectedArray);           
+            ArrayList actual = new ArrayList(actualArray);
+            ArrayList expected = new ArrayList(expectedArray);
             ArrayList arrayList = new ArrayList(array);
 
             actual.AddArrayListAtTheBegining(arrayList);
@@ -187,7 +260,7 @@ namespace ArrayListTests
         }
 
         //26
-        [TestCase(2, new int[] { 2, 3, 5, 4, 6 }, new int[] { 2, 3}, new int[] { 2, 3, 2, 3, 5, 4, 6 })]
+        [TestCase(2, new int[] { 2, 3, 5, 4, 6 }, new int[] { 2, 3 }, new int[] { 2, 3, 2, 3, 5, 4, 6 })]
         public void AddArrayListByIndexTests(int index, int[] actualArray, int[] array, int[] expectedArray)
         {
             ArrayList actual = new ArrayList(actualArray);
@@ -213,5 +286,34 @@ namespace ArrayListTests
         //    LinkedList b = new LinkedList(new int[] { 1, 2, 3 });
         //        Assert.AreEqual(a, b);
         //}
-    }
+
+        //negativ7
+        [TestCase(-1, new int[] { 2, 6, 77, 3, 3, 2 })]
+        public void RemoveLastElementsNegativeTests(int value, int[]actualArray)
+            {
+            ArrayList actual = new ArrayList(actualArray);
+            Assert.Throws<ArgumentOutOfRangeException>(()=>actual.RemoveLastElements(value));
+            }
+        //negativ9
+        [TestCase(-1, -2, new int[] { 2, 6, 77, 3, 3, 2 })]
+        public void RemoveByIndexNElementsNegativeTests(int index, int n, int[] actualArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            Assert.Throws<ArgumentException>(() => actual.RemoveByIndexNElements(index, n));
+        }
+        //negativ11
+        [TestCase(-2, new int[] { 2, 6, 77, 3, 3, 2 })]
+        public void GetElementByIndexNegativeTests(int index, int[]actualArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            Assert.Throws<ArgumentException>(() => actual.GetElementByIndex(index));
+        }
+        //negativ13
+        [TestCase(-2, -17, new int[] { 2, 6, 77, 3, 3, 2 })]
+        public void ChangeValueByIndexNegativeTests(int index, int value, int[]actualArray)
+        {
+            ArrayList actual = new ArrayList(actualArray);
+            Assert.Throws<ArgumentException>(() => actual.ChangeValueByIndex(index, value));
+        }
+}
 }
