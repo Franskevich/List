@@ -8,7 +8,7 @@ namespace List
     {                  //значение и ссылка на др ноду
         public int Value { get; set; }
 
-        public Node Next; 
+        public Node Next;
 
         public Node(int value)// конструктор /нода не может быть пустой, присваиваем значение 
         {
