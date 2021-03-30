@@ -98,7 +98,7 @@ namespace ArrayListTests
         }
 
         //9
-        [TestCase(2, 1, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 7, 9 })]
+        [TestCase(2, 1, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 4, 7, 9 })]
         [TestCase(2, 3, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 9 })]
         public void RemoveByIndexNElementsTests(int index, int n, int[] actualLinked, int[] expectedLinked)
         {
@@ -115,6 +115,22 @@ namespace ArrayListTests
             LinkedList expected = new LinkedList(expectedLinked);
             actual.Reverse();
             Assert.AreEqual(expected, actual);
+        }
+
+        //15
+        [TestCase( new int[] { 1, 2, 3, 4 }, 4)]
+        public int GetValueOfMaxElement(int[]actualLinked, int expectedValue)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            Assert.AreEqual(expectedValue, actual);           
+        }
+
+        //16
+        [TestCase(new int[] { 1, 2, 3, 4 }, 4)]
+        public int GetValueOfMaxElement(int[] actualLinked, int expectedValue)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            Assert.AreEqual(expectedValue, actual);
         }
     }
 }

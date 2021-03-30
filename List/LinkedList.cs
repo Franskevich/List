@@ -48,133 +48,19 @@ namespace List
         private Node _head;                               // nachalo i konets spiska
         private Node _tail;
         //
-        public LinkedList()                                        //pust constr
-        {
-            Node current = _head;                                                   //заводим ~ карэнт равную руту с сылкой на 1 ноду
+        //public LinkedList()                                        //pust constr
+        //{
+        //    Node current = _head;                                                   //заводим ~ карэнт равную руту с сылкой на 1 ноду
 
-            for (int i = 1; i < index - 1; i++)
-            {
-                current = current.Next;                                         //нужно перепресвоить ссылку
-            }
-            current.Next = current.Next.Next;
-            Length--;                                              // сначала выполняется действие справа от равно мы еще не стерли старый некст
-        }                                                                //--ленгх записать kak?
+        //    for (int i = 1; i < index - 1; i++)
+        //    {
+        //        current = current.Next;                                         //нужно перепресвоить ссылку
+        //    }
+        //    current.Next = current.Next.Next;
+        //    Length--;                                              // сначала выполняется действие справа от равно мы еще не стерли старый некст
+        //}                                                                //--ленгх записать kak?
                                                                          // цикл законче - удаляем "ячейку"
-                                                                         //а в карен некст кладется  ссылка на хвост 
-
-        //7 удаление из конца N элементов
-        public void RemoveLastElements(int n)
-        {          
-            Node cur;
-            for (int i = 1; i < Length-n-1; i++)
-            {
-                cur = _tail; 
-            }
-            Length -= n;           
-        }
-
-        //8 удаление из начала N элементов
-        //9 удаление по индексу N элементов
-        //10 вернуть длину
-
-
-        //11 доступ по индексу
-        private Node GetNodeByIndex(int index)
-        {
-            if (index < 0 || index >= Length)
-            {
-                throw new IndexOutOfRangeException();
-            }
-            Node cur;
-            if (index == Length - 1)
-            {
-                cur = _tail;
-            }
-            else
-            {
-                cur = _head;
-                for (int i = 1; i <= index; i++)
-                {
-                    cur = cur.Next;
-                }                
-            }
-            return cur;
-        }
-              
-        //12 первый индекс по значению
-        //13 изменение по индексу
-
-
-        //14 реверс
-
-        public void Reverse()
-        {
-            Node pre = null;
-            Node current = _head;
-            Node next = null;
-            while (current != null)
-            {
-                next = current.Next;
-                current.Next = pre;
-                pre = current;
-                current = next;
-            }
-            _head = pre;
-            _tail = current;
-        }
-
-        //15 поиск значения максимального элемента
-
-        //16 поиск значения минимального элемента
-        //17 поиск индекса максимального элемента
-       
-        //18 поиск индекса минимального элемента
-        //19 сортировка по возрастанию
-        public void SortByAcsending()
-        {
-            Node iNode = _head;
-            int tmp;
-            for (int i = 0; i < Length; i++)
-            {
-                Node jNode = iNode.Next;
-                for (int j = i + 1; j < Length; j++)
-                {
-                    if (iNode.Value > jNode.Value)
-                    {
-                        tmp = iNode.Value;
-                        iNode.Value = jNode.Value;
-                        jNode.Value = tmp;
-                    }
-                    jNode = jNode.Next;
-                }
-                iNode = iNode.Next;
-            }
-        }
-        //20 сортировка по убыванию
-        public void SortSortByDescending()
-        {
-            Node iNode = _head;
-        int tmp;
-            for (int i = 0; i<Length; i++)
-            {
-                Node jNode = iNode.Next;
-                for (int j = i + 1; j<Length; j++)
-                {
-                    if (iNode.Value<jNode.Value)
-                    {
-                        tmp = iNode.Value;
-                        iNode.Value = jNode.Value;
-                        jNode.Value = tmp;
-                    }
-                    jNode = jNode.Next;
-                }
-                iNode = iNode.Next;
-            }
-        }
-        //21 удаление по значению первого
-
-
-        //22 удаление по значению всех
+                                                                         //а в карен некст кладется  ссылка на хвост              
 
         public LinkedList()                                        //pust constr
         {
@@ -182,7 +68,7 @@ namespace List
             _head = null;
             _tail = null;
         }
-        //
+        ////
         public LinkedList(int value)                                //конструтко по 1 элементу
         {
             Length = 1;
@@ -190,7 +76,7 @@ namespace List
             _tail = _head;
         }
 
-        //
+        ////
         public LinkedList(int[] values)                               //constructor dliy massiva
         {
             Length = values.Length;
@@ -234,7 +120,7 @@ namespace List
             _head = NewNode;
         }
         
-        //3
+        //
         public void Add(int value)
         {
             if (Length == 0)
@@ -323,24 +209,18 @@ namespace List
             {
                 throw new IndexOutOfRangeException("Такого индекса нет");
             }
-            if (n < 0)
+            else if (n < 0)
             {
                 throw new ArgumentException("Индекс не может быть отрицательным");
             }
-            if (index == 0 || n==1)
+            else if (index == 0 && n==1)
             {
                 RemoveFirst();
             }
             else
             {
-                Node tmpNode = _head;
-
-                for (int i = 0; i < index + n; i++)
-                {
-                    tmpNode = tmpNode.Next;
-                }
-                Node current = GetNodeByIndex(index);
-
+                Node tmpNode = GetNodeByIndex(index + n);
+                Node current = GetNodeByIndex(index-1);
                 current.Next = tmpNode;
 
                 Length -= n;
@@ -353,11 +233,28 @@ namespace List
 
 
         //12 первый индекс по значению
-        public void GetFirstIndexByValue()
+        public int GetFirstIndexByValue(int value)
         {
-
+            int index = -1;
+            Node cur = _head;
+            for (int i = 0; i<Length; i++)
+            {
+                if (value == cur.Value)
+                {
+                    index = i;
+                    break;
+                }
+                cur = cur.Next;
+            }
+            return index; 
         }
+
         //13 изменение по индексу
+        public void ChangeByIndex(int index, int value)
+        {
+            Node cur=GetNodeByIndex(index);
+            cur.Value=value;
+        }
 
         //14 реверс
         public void Reverse()
@@ -376,54 +273,70 @@ namespace List
             _tail = current;
         }
 
-        //15 поиск значения максимального элемента
-        public int GetMaxElement()
+        //15 поиск значения максимального значения
+        public int GetValueOfMaxElement()
         {
-            return GetMaxElementWithIndex()._head.Value;
+            Node tmp = _head;
+            int MaxValue = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (tmp.Value > tmp.Next.Value)
+                {
+                    MaxValue = tmp.Value;
+                }
+                tmp = tmp.Next;
+            }
+            return MaxValue;
         }
 
         //16 поиск значения минимального элемента
-        //public int GetMinElement()
-        //{
-        //    return GetMinElementWithIndex()._root.Value;
-        //}
+        public int GetValueOfMinElement()
+        {           
+            Node tmp = _head;
+            int MinValue = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (tmp.Value < tmp.Next.Value)
+                {
+                    MinValue = tmp.Value;
+                }
+                tmp = tmp.Next;
+            }
+            return MinValue;           
+        }
 
         //17 поиск индекса максимального элемента
         public int GetIndexOfMaxElement()
         {
-            return GetMaxElementWithIndex()._tail.Value;
+            int index =0;
+            Node tmp = _head;
+            for (int i = 0; i < Length; i++) 
+            {
+                if (tmp.Next.Value > tmp.Value) 
+                {
+                    index = i;
+                }
+                tmp = tmp.Next;
+            }
+            return index;
         }
 
         //18 поиск индекса минимального элемента
-        //public int GetIndexOfMinElement()
-        //{
-        //    return GetMinElementWithIndex()._tail.Value;
-        //}
-
-
-        //
-        private LinkedList GetMaxElementWithIndex()
+        public int GetIndexOfMinElement()
         {
-            if (Length == 0)
+            int index=0;
+            Node tmp = _head;
+            for (int i =0; i < Length; i++)
             {
-                throw new NullReferenceException();
-            }
-            int maxElement;
-            maxElement = _head.Value;
-            Node current = _head;
-            int indexOfMaxElement = 0;
-            for (int i = 1; i < Length; i++)
-            {
-                current = current.Next;
-                if (current.Value > maxElement)
+                if (tmp.Next.Value < tmp.Value)
                 {
-                    maxElement = current.Value;
-                    indexOfMaxElement = i;
+                    index = i;
                 }
+                tmp = tmp.Next;
             }
-            LinkedList maxElementWithIndex = new LinkedList(new int[] { maxElement, indexOfMaxElement });
-            return maxElementWithIndex;
+           return index;
         }
+
         //19 сортировка по возрастанию//
 
         public void SortByAcsending()
@@ -446,6 +359,7 @@ namespace List
                 iNode = iNode.Next;
             }
         }
+
         //20 сортировка по убыванию
         public void SortSortByDescending()
         {
@@ -467,133 +381,45 @@ namespace List
                 iNode = iNode.Next;
             }
         }
-        //+?21 удаление по значению первого
-        //public int RemoveFirstByValue(int value)
-        //{
-        //    Node current = _head;
-        //    Node previous = null;
-        //    for (int i = 0; i < Length; i++)
-        //    {
-        //        if (current.Value == value)
-        //        {
-        //            RemoveCurrentNode(current, i, previous);
-
-        //            return i;
-        //        }
-        //        previous = current;
-        //        current = current.Next;
-        //    }
-
-        //    return -1;
-        //}
+        //21 удаление по значению первого
+        public int RemoveFirstByValue(int value)
+        {
+            int IndexOfValue = GetFirstIndexByValue(value);
+            RemoveByIndex(IndexOfValue);
+            return IndexOfValue;
+        }
 
         //22 удаление по значению всех
-        //public int RemoveAllByValue(int value)
-        //{
-        //    Node current = _head;
-        //    Node previous = null;
-        //    int countOfRemoved = 0;
-        //    for (int i = 0; i < Length; i++)
-        //    {
-        //        if (current.Value == value)
-        //        {
-        //            RemoveCurrentNode(current, i, previous);
-        //            countOfRemoved++;
-        //            i--;
-        //        }
-        //        previous = current;
-        //        current = current.Next;
-        //    }
+        public void RemoveAllByValue(int value)
+        {
+            int IndexOfValue = 0;
+            for (int i = 0; i < Length; i++)
+            {
+                IndexOfValue = GetFirstIndexByValue(value);
+                RemoveByIndex(IndexOfValue);                
+            }
+            
+        }
 
-        //    return countOfRemoved;
-        //}
-
-        //23 
-        //
-        
+        //23 конструктора     
 
         //24 добавление списка в конец
-        //public void AddListToTheEnd(LinkedList list)
-        //{
-        //    if (list.Length != 0)
-        //    {
-        //        LinkedList copy = Copy(list);
-        //        if (Length == 0)
-        //        {
-        //            _head = copy._head;
-        //            _tail = copy._tail;
-        //            Length = copy.Length;
-        //        }
-        //        else
-        //        {
-        //            _tail.Next = copy._head;
-        //            _tail = copy._tail;
-        //            Length += copy.Length;
-        //        }
-
-        //    }
-        //}
+        public void AddListToTheEnd(LinkedList list)
+        {
+            
+        }
         //25 добавление списка в начало
-        //public void AddListToTheBeggining(LinkedList list)
-        //{
-        //    if (list.Length != 0)
-        //    {
-        //        LinkedList copy = Copy(list);
-        //        if (Length == 0)
-        //        {
-        //            _head = copy._head;
-        //            _tail = copy._tail;
-        //            Length = copy.Length;
-        //        }
-        //        else
-        //        {
-        //            copy._tail.Next = _head;
-        //            _head = copy._head;
-        //            Length += copy.Length;
-        //        }
+        public void AddListToTheBeggining(LinkedList list)
+        {
+            
+        }
 
-        //    }
-        //}
+       //26 добавление списка по индексу
+        public void AddListByIndex(LinkedList list, int index)
+        {
+            
+        }
 
-        //26 добавление списка по индексу
-        //public void AddListByIndex(LinkedList list, int index)
-        //{
-        //    if (index < 0 || index > Length)
-        //    {
-        //        throw new IndexOutOfRangeException();
-        //    }
-        //    if (list.Length != 0)
-        //    {
-
-        //        if (index == 0)
-        //        {
-        //            AddListToTheBeggining(list);
-        //        }
-        //        else if (index == Length)
-        //        {
-        //            AddListToTheEnd(list);
-        //        }
-        //        else
-        //        {
-        //            LinkedList copy = Copy(list);
-        //            if (Length == 0)
-        //            {
-        //                _head = copy._head;
-        //                _tail = copy._tail;
-        //                Length = copy.Length;
-        //            }
-        //            else
-        //            {
-        //                Node tmp;
-        //                tmp = GetNodeByIndex(index - 1);
-        //                copy._tail.Next = tmp.Next;
-        //                tmp.Next = copy._head;
-        //                Length += copy.Length;
-        //            }
-        //        }
-        //    }
-        //}
-        //
         public override int GetHashCode()
         {
             return base.GetHashCode();
