@@ -30,7 +30,7 @@ namespace ArrayListTests
 
         //3
         [TestCase(8, 1, new int[] { 1, 4, 5 }, new int[] { 1, 8, 4, 5 })]
-        public void AddValueByIndexTEst(int value, int index, int[]actualLinked, int[]expectedLinked)
+        public void AddValueByIndexTest(int value, int index, int[]actualLinked, int[]expectedLinked)
         {
             LinkedList actual = new LinkedList(actualLinked);
             LinkedList expected = new LinkedList(expectedLinked);
@@ -98,7 +98,8 @@ namespace ArrayListTests
         }
 
         //9
-        [TestCase(2,2, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 7, 9 })]
+        [TestCase(2, 1, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 7, 9 })]
+        [TestCase(2, 3, new int[] { 1, 2, 3, 4, 7, 9 }, new int[] { 1, 2, 9 })]
         public void RemoveByIndexNElementsTests(int index, int n, int[] actualLinked, int[] expectedLinked)
         {
             LinkedList actual = new LinkedList(actualLinked);

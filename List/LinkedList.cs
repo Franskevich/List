@@ -7,8 +7,6 @@ namespace List
     public class LinkedList
     {
         public int Length { get; private set; }
-       
-
         public int this[int index]                // индексатор
         {                                         //лучше создать привaтный индекс GetNodeByIndex (который возвращает карэнт) но не в сортировках           
             //get
@@ -47,7 +45,6 @@ namespace List
                 cur.Value = value;
             }
         }
-
         private Node _head;                               // nachalo i konets spiska
         private Node _tail;
         //
@@ -64,6 +61,7 @@ namespace List
             _head = new Node(value);
             _tail = _head;
         }
+
         //
         public LinkedList(int[] values)                               //constructor dliy massiva
         {
@@ -224,9 +222,13 @@ namespace List
         //10 вернуть длину
 
         //11 доступ по индексу
-        
+
 
         //12 первый индекс по значению
+        public void GetFirstIndexByValue()
+        {
+
+        }
         //13 изменение по индексу
 
         //14 реверс
