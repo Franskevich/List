@@ -119,18 +119,78 @@ namespace ArrayListTests
 
         //15
         [TestCase( new int[] { 1, 2, 3, 4 }, 4)]
-        public int GetValueOfMaxElement(int[]actualLinked, int expectedValue)
+        public void GetValueOfMaxElementTEsts(int[] actualLinked, int expected)
         {
             LinkedList actual = new LinkedList(actualLinked);
-            Assert.AreEqual(expectedValue, actual);           
+            int actualMax = actual.GetValueOfMaxElement();
+            Assert.AreEqual(expected, actualMax);           
         }
 
         //16
-        [TestCase(new int[] { 1, 2, 3, 4 }, 4)]
-        public int GetValueOfMaxElement(int[] actualLinked, int expectedValue)
+        [TestCase(new int[] { 1, 2, 3, 4 }, 1)]
+        public void GetValueOfMinElementTests(int[] actualLinked, int expected)
         {
             LinkedList actual = new LinkedList(actualLinked);
-            Assert.AreEqual(expectedValue, actual);
+            int actualMin = actual.GetValueOfMinElement();
+            Assert.AreEqual(expected, actualMin);
         }
+
+        //17
+        [TestCase(new int[] { 1, 2, 3, 4 }, 3)]
+        public void GetIndexOfMaxElementTests(int[] actualLinked, int expected)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            int actualMaxIndex = actual.GetIndexOfMaxElement();
+            Assert.AreEqual(expected, actualMaxIndex);
+        }
+        //18
+        [TestCase(new int[] { 1, 2, 3, 4 }, 0)]
+        public void GetIndexOfMinElement(int[] actualLinked, int expected)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            int actualMinIndex = actual.GetIndexOfMinElement();
+            Assert.AreEqual(expected, actualMinIndex);
+        }
+
+        //19
+        [TestCase(new int[] { 1, 8, 9, 4, 6 }, new int[] { 1, 4, 6, 8, 9 })]
+        public void SortByAcsending(int[]actualLinked, int[]expectedLinked)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            LinkedList expected = new LinkedList(expectedLinked);
+            actual.SortByAcsending();
+            Assert.AreEqual(expected, actual);
+        }
+        //20
+        [TestCase(new int[] { 1, 8, 9, 4, 6 }, new int[] { 9, 8, 6, 4, 1})]
+        public void SortSortByDescending(int[] actualLinked, int[] expectedLinked)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            LinkedList expected = new LinkedList(expectedLinked);
+            actual.SortSortByDescending();
+            Assert.AreEqual(expected, actual);
+        }
+
+        //24
+        [TestCase(new int[] { 1, 8, 9, 4, 6 }, new int[] { 2, 5, 3 }, new int[] { 1, 8, 9, 4, 6, 2, 5, 3 })]
+        public void AddListAtTheEndTests(int[] actualLinked, int[] insert, int[] expectedLinked)
+        {
+            LinkedList actual = new LinkedList(actualLinked);
+            LinkedList expected = new LinkedList(expectedLinked);
+            LinkedList tmp = new LinkedList(insert);
+            actual.AddListAtTheEnd(tmp);
+            Assert.AreEqual(expected, actual);
+        }
+
+        ////25
+        //[TestCase(new int[] { 1, 8, 9, 4, 6 }, new int[] { 2, 5, 3 }, new int[] { 2, 5, 3, 1, 8, 9, 4, 6 })]
+        //public void AddListAtTheBeginningTests(int[] actualLinked, int[] insert, int[] expectedLinked)
+        //{
+        //    LinkedList actual = new LinkedList(actualLinked);
+        //    LinkedList expected = new LinkedList(expectedLinked);
+        //    LinkedList tmp = new LinkedList(insert);
+        //    actual.AddListAtTheBeginning(tmp);
+        //    Assert.AreEqual(expected, actual);
+        //}
     }
 }

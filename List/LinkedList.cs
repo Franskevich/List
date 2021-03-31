@@ -102,6 +102,27 @@ namespace List
             // current.Next = current.Next.Next; //--ленгх записать kak?
         }                                                        // цикл законче - удаляем "ячейку"
 
+        public LinkedList(LinkedList list)   //конструктор на основе листа
+        {
+            Length = list.Length;
+            if (list.Length != 0)                             
+            {
+                _head = list._head;                //как правильно записать?                                  
+                _tail = _head;
+
+                for (int i = 1; i < list.Length; i++)
+                {
+                    _tail.Next = list._tail;//нужно бежать
+                    _tail = _tail.Next;    //                                                                               
+                }                                          
+            }
+            else
+            {
+                _head = null;
+                _tail = null;
+            }
+        }
+
         //1 добавление значения в конец
         public void AddAtTheEnd(int value)
         {
@@ -277,13 +298,13 @@ namespace List
         public int GetValueOfMaxElement()
         {
             Node tmp = _head;
-            int MaxValue = 0;
-            for (int i = 1; i < Length; i++)
+            int MaxValue = _head.Value;
+            for (int i = 0; i < Length; i++)
             {
-                if (tmp.Value > tmp.Next.Value)
+                if (tmp.Value > MaxValue)
                 {
                     MaxValue = tmp.Value;
-                }
+                }           
                 tmp = tmp.Next;
             }
             return MaxValue;
@@ -293,13 +314,14 @@ namespace List
         public int GetValueOfMinElement()
         {           
             Node tmp = _head;
-            int MinValue = 0;
-            for (int i = 1; i < Length; i++)
+            int MinValue = _head.Value;
+            for (int i = 0; i < Length; i++)
             {
-                if (tmp.Value < tmp.Next.Value)
+                if (tmp.Value < MinValue)
                 {
                     MinValue = tmp.Value;
                 }
+               
                 tmp = tmp.Next;
             }
             return MinValue;           
@@ -308,13 +330,15 @@ namespace List
         //17 поиск индекса максимального элемента
         public int GetIndexOfMaxElement()
         {
-            int index =0;
+            int index = 0;
+            int max = _head.Value;
             Node tmp = _head;
             for (int i = 0; i < Length; i++) 
             {
-                if (tmp.Next.Value > tmp.Value) 
+                if (max < tmp.Value)
                 {
                     index = i;
+                    max = tmp.Value;
                 }
                 tmp = tmp.Next;
             }
@@ -324,21 +348,22 @@ namespace List
         //18 поиск индекса минимального элемента
         public int GetIndexOfMinElement()
         {
-            int index=0;
+            int index = 0;
+            int min = _head.Value;
             Node tmp = _head;
-            for (int i =0; i < Length; i++)
+            for (int i = 0; i < Length; i++)
             {
-                if (tmp.Next.Value < tmp.Value)
+                if (min > tmp.Value)
                 {
                     index = i;
-                }
-                tmp = tmp.Next;
+                    min = tmp.Value;                   
+                }                
+                tmp = tmp.Next;                
             }
            return index;
         }
 
         //19 сортировка по возрастанию//
-
         public void SortByAcsending()
         {
             Node iNode = _head;
@@ -404,14 +429,27 @@ namespace List
         //23 конструктора     
 
         //24 добавление списка в конец
-        public void AddListToTheEnd(LinkedList list)
+        public void AddListAtTheEnd(LinkedList list)
         {
+            //_tail.Next = list._head;
+            //_tail = list._tail;
+            Length += list.Length;
             
+            LinkedList NewList = new LinkedList(list);
+            _head = NewList._head;
+            _tail = NewList._tail;            
         }
+
         //25 добавление списка в начало
-        public void AddListToTheBeggining(LinkedList list)
+        public void AddListAtTheBeginning(LinkedList list)
         {
-            
+            list._tail.Next = _head;
+            _head = list._head;
+            Length += list.Length;
+            Node cur = _head;
+            LinkedList NewList = new LinkedList(list);
+            _head = NewList._head;
+            _tail = NewList._tail;
         }
 
        //26 добавление списка по индексу
@@ -445,6 +483,7 @@ namespace List
                 return " " + String.Empty;
             }
         }
+
         //
         public override bool Equals(object obj)
         {
